@@ -14,7 +14,7 @@ import org.hibernate.criterion.Order;
  * @version 1
  * @since 5 February 2014
  */
-public interface BaseDao<T> {
+public interface IDao<T> {
 
     public T getEntiyByPK(String id);
 
