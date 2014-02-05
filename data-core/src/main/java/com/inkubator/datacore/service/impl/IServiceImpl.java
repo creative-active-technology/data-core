@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
  * @version 1
  * @since 5 February 2014
  */
-public class BaseServiceImpl implements Serializable {
+public class IServiceImpl implements Serializable {
 
     protected transient Logger LOGGER = Logger.getLogger(getClass());
 }
