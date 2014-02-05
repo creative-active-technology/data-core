@@ -14,7 +14,7 @@ import javax.persistence.criteria.Order;
  * @version 1
  * @since 5 February 2014
  */
-public interface BaseService<T> {
+public interface IService<T> {
 
     public T getEntiyByPK(String id) throws Exception;
 

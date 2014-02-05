@@ -26,7 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @param <T> is Entity class (JPA POJO Class or Hibernate POJO Class)
  * @since 5 February 2014
  */
-public abstract class BaseDaoImpl<T> implements Serializable {
+public abstract class IDAOImpl<T> implements Serializable {
 
     protected transient Logger LOGGER = Logger.getLogger(getClass());
     @Autowired
