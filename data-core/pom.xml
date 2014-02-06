@@ -9,12 +9,24 @@
 
     <name>data-core</name>
     <url>http://maven.apache.org</url>
-
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <springframework-version>3.2.6.RELEASE</springframework-version>
+        <springframework-version>3.1.4.RELEASE</springframework-version>
         <springdatajpa-version>1.4.3.RELEASE</springdatajpa-version>
-        <hibernate-version>4.3.0.Final</hibernate-version>
+        <hibernate-version>4.2.7.SP1</hibernate-version>
         <hibernate-validator-version>5.0.2.Final</hibernate-validator-version>
         <javax_validation-version>1.1.0.Final</javax_validation-version>
         <javax-enterprise>1.1</javax-enterprise>
@@ -24,6 +36,11 @@
     </properties>
 
     <dependencies>
+         <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.25</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>

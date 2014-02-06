@@ -4,11 +4,14 @@
  */
 package com.inkubator.datacore.util;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.apache.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import sun.java2d.pipe.SpanShapeRenderer;
 
 /**
  *
@@ -21,6 +24,7 @@ public class ServiceLog {
 
     @Before("execution(* com.inkubator.*.service.impl.*.*(..))")
     public void logBeforeService(JoinPoint joinPoint) {
+        LOGGER.info(new SimpleDateFormat("dd-MM-yyy hh:mm:ss.SSSS").format(new Date()));
         LOGGER.info(" ---------- Service Executed  ----------");
         LOGGER.info("BEFORE Methode - Class Name :" + joinPoint.getTarget().getClass().getName());
         LOGGER.info("BEFORE Methode - Method Name :" + joinPoint.getSignature().getName() + "()");
@@ -35,6 +39,15 @@ public class ServiceLog {
         LOGGER.info(" ---------- DAO Executed ----------");
     }
 
+    @AfterReturning(pointcut = "execution(* com.inkubator.*.dao.impl.*.*(..))",
+            returning = "result")
+    public void logAfterReturnDao(JoinPoint joinPoint, Object result) {
+        LOGGER.info(" ---------- DAO Executed ----------");
+        LOGGER.info("AFTER Methode - Class Name :" + joinPoint.getTarget().getClass().getName());
+        LOGGER.info("AFTER Methode - Method Name :" + joinPoint.getSignature().getName() + "()");
+        LOGGER.info(" ---------- DAO Executed  ----------");
+    }
+
     @AfterReturning(pointcut = "execution(* com.inkubator.*.service.impl.*.*(..))",
             returning = "result")
     public void logAfterReturnService(JoinPoint joinPoint, Object result) {
@@ -42,6 +55,7 @@ public class ServiceLog {
         LOGGER.info("AFTER Methode - Class Name :" + joinPoint.getTarget().getClass().getName());
         LOGGER.info("AFTER Methode - Method Name :" + joinPoint.getSignature().getName() + "()");
         LOGGER.info(" ---------- Service Executed  ----------");
+        LOGGER.info(new SimpleDateFormat("dd-MM-yyy hh:mm:ss.SSSS").format(new Date()));
     }
 
 }

@@ -14,7 +14,7 @@ import org.hibernate.Session;
 import org.hibernate.context.internal.ManagedSessionContext;
 import org.hibernate.context.spi.CurrentSessionContext;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
-import org.hibernate.engine.transaction.jta.platform.spi.JtaPlatform;
+import org.hibernate.service.jta.platform.spi.JtaPlatform;
 import org.springframework.orm.hibernate4.SpringSessionContext;
 import org.springframework.transaction.jta.JtaAfterCompletionSynchronization;
 import org.springframework.transaction.support.TransactionSynchronization;
@@ -48,7 +48,7 @@ public class TransactionAwareSessionContext implements CurrentSessionContext {
     /**
      * Creates a new session context and sets the related session factory.
      *     
-* @param theSessionFactory Context session factory. Cannot be null.
+     * @param theSessionFactory Context session factory. Cannot be null.
      */
     public TransactionAwareSessionContext(
             final SessionFactoryImplementor theSessionFactory) {
