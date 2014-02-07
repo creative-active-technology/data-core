@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import javax.transaction.Synchronization;
 import org.apache.commons.lang3.Validate;
+import org.apache.log4j.Logger;
 import org.hibernate.FlushMode;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -27,6 +28,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
  */
 public class TransactionAwareSessionContext implements CurrentSessionContext {
 
+    protected transient Logger LOGGER = Logger.getLogger(TransactionAwareSessionContext.class);
     /**
      * ID for serialization.
      */
@@ -47,13 +49,13 @@ public class TransactionAwareSessionContext implements CurrentSessionContext {
 
     /**
      * Creates a new session context and sets the related session factory.
-     *     
+     *
      * @param theSessionFactory Context session factory. Cannot be null.
      */
     public TransactionAwareSessionContext(
             final SessionFactoryImplementor theSessionFactory) {
         Validate.notNull(theSessionFactory, "The session factory cannot be null.");
-
+        
         defaultSessionContext = new SpringSessionContext(theSessionFactory);
         localSessionContext = new ManagedSessionContext(theSessionFactory);
         sessionFactory = theSessionFactory;
@@ -71,21 +73,22 @@ public class TransactionAwareSessionContext implements CurrentSessionContext {
         try {
             return defaultSessionContext.currentSession();
         } catch (HibernateException cause) {
+            LOGGER.error(cause.getMessage());
 
 // There's no session bound to the current thread. Let's open one if
 // needed.
             if (ManagedSessionContext.hasBind(sessionFactory)) {
                 return localSessionContext.currentSession();
             }
-
+            
             Session session;
             session = sessionFactory.openSession();
-
+            
             if (registerSynchronization(session)) {
 // Normalizes Session flush mode, defaulting it to AUTO. Required for
 // synchronization.
                 FlushMode flushMode = session.getFlushMode();
-
+                
                 if (FlushMode.isManualFlushMode(flushMode)
                         && !TransactionSynchronizationManager
                         .isCurrentTransactionReadOnly()) {
@@ -93,7 +96,7 @@ public class TransactionAwareSessionContext implements CurrentSessionContext {
                 }
             }
             ManagedSessionContext.bind(session);
-
+            
             return session;
         }
     }
@@ -123,14 +126,14 @@ public class TransactionAwareSessionContext implements CurrentSessionContext {
 // If it's allowed, registers synchronization to cleanup session.
             if (jtaPlatform.canRegisterSynchronization()) {
                 List<TransactionSynchronization> synchronizations;
-
+                
                 synchronizations = Arrays.asList(
                         createTransactionSynchronization(session));
-
+                
                 Synchronization jtaSync;
                 jtaSync = new JtaAfterCompletionSynchronization(synchronizations);
                 jtaPlatform.registerSynchronization(jtaSync);
-
+                
                 return true;
             }
         }
