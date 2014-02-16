@@ -20,7 +20,7 @@ public class ServiceUtil {
 
     public static ApplicationContext getApplicationContext() {
         if (appContext == null) {
-            appContext = new ClassPathXmlApplicationContext("spring/applicationContext.xml");
+            appContext = new ClassPathXmlApplicationContext("spring/dataCore.xml");
         }
         return appContext;
     }

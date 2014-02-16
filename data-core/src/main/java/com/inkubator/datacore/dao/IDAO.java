@@ -13,6 +13,7 @@ import org.hibernate.criterion.Order;
  *
  * @author Deni Husni Fahri Rizal
  * @version 1
+ * @param <T>
  * @since 5 February 2014
  */
 public interface IDAO<T> {

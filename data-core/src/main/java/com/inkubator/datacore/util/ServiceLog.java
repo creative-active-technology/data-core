@@ -4,6 +4,7 @@
  */
 package com.inkubator.datacore.util;
 
+import com.inkubator.common.util.DateTimeUtil;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.apache.log4j.Logger;
@@ -20,10 +21,13 @@ import org.aspectj.lang.annotation.Before;
 public class ServiceLog {
 
     private static final Logger LOGGER = Logger.getLogger(ServiceLog.class);
+    private Date enterDate;
+    private Date escapeDate;
 
     @Before("execution(* com.inkubator.*.service.impl.*.*(..))")
     public void logBeforeService(JoinPoint joinPoint) {
-        LOGGER.info(new SimpleDateFormat("dd-MM-yyy hh:mm:ss.SSSS").format(new Date()));
+        enterDate = new Date();
+        LOGGER.info(new SimpleDateFormat("dd-MM-yyy hh:mm:ss.SSS").format(enterDate));
         LOGGER.info(" ---------- Service Executed  ----------");
         LOGGER.info("BEFORE Methode - Class Name :" + joinPoint.getTarget().getClass().getName());
         LOGGER.info("BEFORE Methode - Method Name :" + joinPoint.getSignature().getName() + "()");
@@ -50,11 +54,19 @@ public class ServiceLog {
     @AfterReturning(pointcut = "execution(* com.inkubator.*.service.impl.*.*(..))",
             returning = "result")
     public void logAfterReturnService(JoinPoint joinPoint, Object result) {
+
         LOGGER.info(" ---------- Service Executed  ----------");
         LOGGER.info("AFTER Methode - Class Name :" + joinPoint.getTarget().getClass().getName());
         LOGGER.info("AFTER Methode - Method Name :" + joinPoint.getSignature().getName() + "()");
         LOGGER.info(" ---------- Service Executed  ----------");
-        LOGGER.info(new SimpleDateFormat("dd-MM-yyy hh:mm:ss.SSSS").format(new Date()));
+        escapeDate = new Date();
+        LOGGER.info(new SimpleDateFormat("dd-MM-yyy hh:mm:ss.SSS").format(escapeDate));
+        String start = new SimpleDateFormat("ss.SSS").format(enterDate);
+        String end = new SimpleDateFormat("ss.SSS").format(escapeDate);
+        Double star1 = Double.parseDouble(start);
+        Double end1 = Double.parseDouble(end);
+        LOGGER.info("Total time :" + (end1 - star1)+" s");
+
     }
 
 }

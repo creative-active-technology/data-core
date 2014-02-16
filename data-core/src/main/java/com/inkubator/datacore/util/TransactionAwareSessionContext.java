@@ -70,10 +70,9 @@ public class TransactionAwareSessionContext implements CurrentSessionContext {
      */
     @Override
     public Session currentSession() {
-        try {
+       try {
             return defaultSessionContext.currentSession();
         } catch (HibernateException cause) {
-            LOGGER.error(cause.getMessage());
 
 // There's no session bound to the current thread. Let's open one if
 // needed.
