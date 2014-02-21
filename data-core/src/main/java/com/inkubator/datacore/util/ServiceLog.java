@@ -4,7 +4,6 @@
  */
 package com.inkubator.datacore.util;
 
-import com.inkubator.common.util.DateTimeUtil;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.apache.log4j.Logger;

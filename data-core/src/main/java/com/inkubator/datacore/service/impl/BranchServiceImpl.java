@@ -9,7 +9,7 @@ import com.inkubator.datacore.Branch;
 import com.inkubator.datacore.dao.BranchDao;
 import com.inkubator.datacore.service.BranchService;
 import java.util.List;
-import javax.persistence.criteria.Order;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
