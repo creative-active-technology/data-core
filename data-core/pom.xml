@@ -4,7 +4,7 @@
 
     <groupId>com.inkubator</groupId>
     <artifactId>data-core</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0.RELEASE</version>
     <packaging>jar</packaging>
 
     <name>data-core</name>
@@ -27,7 +27,7 @@
         <dependency>
             <groupId>com.incubator.it</groupId>
             <artifactId>common-util</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0.0.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
