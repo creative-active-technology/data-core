@@ -470,4 +470,30 @@ public abstract class IDAOImpl<T> implements Serializable {
         return (List<T>) criteria.list();
     }
 
+    /**
+     * Get Total data for specific Entity (T). Note this method only return data
+     * that have code
+     *
+     *
+     * @param code
+     * @return total entity
+     */
+    public Long getTotalByCode(String code) {
+        Criteria criteria = getCurrentSession().createCriteria(getEntityClass());
+        criteria.add(Restrictions.eq("code", code));
+        return (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
+    }
+
+    public Long getTotalByCodeAndNotId(String code, Long id) {
+        Criteria criteria = getCurrentSession().createCriteria(getEntityClass());
+        criteria.add(Restrictions.eq("code", code));
+        criteria.add(Restrictions.ne("id", id));
+        return (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
+    }
+
+    public Long getTotalByName(String name) {
+        Criteria criteria = getCurrentSession().createCriteria(getEntityClass());
+        criteria.add(Restrictions.eq("name", name));
+        return (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
+    }
 }

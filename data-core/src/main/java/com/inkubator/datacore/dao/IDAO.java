@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.inkubator.datacore.dao;
 
 import java.util.List;
 import org.hibernate.criterion.Order;
 
-    /**
+/**
  *
  * @author Deni Husni Fahri Rizal
  * @version 1
@@ -81,7 +80,11 @@ public interface IDAO<T> {
     public List<T> getAllDataPageAbleIsActive(int firstResult, int maxResults, Order order, Integer isActive);
 
     public List<T> getAllDataPageAbleIsActive(int firstResult, int maxResults, Order order, Byte isActive);
+
+    public Long getTotalByCode(String code);
+
+    public Long getTotalByCodeAndNotId(String code, Long id);
+
+    public Long getTotalByName(String name);
+
 }
-
-
-

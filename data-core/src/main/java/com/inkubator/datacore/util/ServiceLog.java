@@ -64,8 +64,9 @@ public class ServiceLog {
         String end = new SimpleDateFormat("ss.SSS").format(escapeDate);
         Double star1 = Double.parseDouble(start);
         Double end1 = Double.parseDouble(end);
-        LOGGER.info("Total time :" + (end1 - star1)+" s");
+        LOGGER.info("Total time :" + (end1 - star1) + " s");
 
     }
 
+ 
 }
