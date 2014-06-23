@@ -496,4 +496,11 @@ public abstract class IDAOImpl<T> implements Serializable {
         criteria.add(Restrictions.eq("name", name));
         return (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
     }
+    
+    public Long getTotalByNameAndNotId(String name, Long id) {
+        Criteria criteria = getCurrentSession().createCriteria(getEntityClass());
+        criteria.add(Restrictions.eq("name", name));
+        criteria.add(Restrictions.ne("id", id));
+        return (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
+    }
 }

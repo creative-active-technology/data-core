@@ -86,5 +86,7 @@ public interface IDAO<T> {
     public Long getTotalByCodeAndNotId(String code, Long id);
 
     public Long getTotalByName(String name);
+    
+    public Long getTotalByNameAndNotId(String name, Long id);
 
 }
