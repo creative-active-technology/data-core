@@ -145,7 +145,7 @@ public abstract class IDAOImpl<T> implements Serializable {
      * @return T is casting to any entity or object
      */
     public T updateData(T entity) {
-        this.updateData(entity);
+        this.update(entity);
         return entity;
     }
 
