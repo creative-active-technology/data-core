@@ -11,6 +11,7 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.springframework.aop.framework.Advised;
 
 /**
  *
@@ -23,8 +24,12 @@ public class ServiceLog {
     private Date enterDate;
     private Date escapeDate;
 
-    @Before("execution(* com.inkubator.*.service.impl.*.*(..))")
-    public void logBeforeService(JoinPoint joinPoint) {
+    @Before("execution(* com.inkubator.*.service.impl.*.*(..)) && args(bean, username)")
+    public void logBeforeService(JoinPoint joinPoint, Object bean, String userName) {
+        Advised advised = (Advised) joinPoint.getThis();
+        Class<?> cls = advised.getTargetSource().getTargetClass();
+        LOGGER.info("Class Name" +cls.getName());
+
         enterDate = new Date();
         LOGGER.info(new SimpleDateFormat("dd-MM-yyy hh:mm:ss.SSS").format(enterDate));
         LOGGER.info(" ---------- Service Executed  ----------");
@@ -34,7 +39,7 @@ public class ServiceLog {
     }
 
     @Before("execution(* com.inkubator.*.dao.impl.*.*(..))")
-    public void logBeforeDao(JoinPoint joinPoint) {
+    public void logBeforeDao(JoinPoint joinPoint, Object bean, String userName) {
         LOGGER.info(" ---------- DAO Executed  ----------");
         LOGGER.info("BEFORE Methode - Class Name :" + joinPoint.getTarget().getClass().getName());
         LOGGER.info("BEFORE Methode - Method Name :" + joinPoint.getSignature().getName() + "()");
@@ -43,7 +48,7 @@ public class ServiceLog {
 
     @AfterReturning(pointcut = "execution(* com.inkubator.*.dao.impl.*.*(..))",
             returning = "result")
-    public void logAfterReturnDao(JoinPoint joinPoint, Object result) {
+    public void logAfterReturnDao(JoinPoint joinPoint, Object bean, String userName) {
         LOGGER.info(" ---------- DAO Executed ----------");
         LOGGER.info("AFTER Methode - Class Name :" + joinPoint.getTarget().getClass().getName());
         LOGGER.info("AFTER Methode - Method Name :" + joinPoint.getSignature().getName() + "()");
@@ -52,7 +57,7 @@ public class ServiceLog {
 
     @AfterReturning(pointcut = "execution(* com.inkubator.*.service.impl.*.*(..))",
             returning = "result")
-    public void logAfterReturnService(JoinPoint joinPoint, Object result) {
+    public void logAfterReturnService(JoinPoint joinPoint, Object bean, String userName) {
 
         LOGGER.info(" ---------- Service Executed  ----------");
         LOGGER.info("AFTER Methode - Class Name :" + joinPoint.getTarget().getClass().getName());
@@ -68,6 +73,4 @@ public class ServiceLog {
 
     }
 
- 
-    
 }
