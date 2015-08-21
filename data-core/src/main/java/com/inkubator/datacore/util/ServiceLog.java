@@ -11,7 +11,6 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.springframework.aop.framework.Advised;
 
 /**
  *
@@ -24,53 +23,53 @@ public class ServiceLog {
     private Date enterDate;
     private Date escapeDate;
 
-    @Before("execution(* com.inkubator.*.service.impl.*.*(..)) && args(bean, username)")
-    public void logBeforeService(JoinPoint joinPoint, Object bean, String userName) {
-        Advised advised = (Advised) joinPoint.getThis();
-        Class<?> cls = advised.getTargetSource().getTargetClass();
-        LOGGER.info("Class Name" +cls.getName());
-
+    @Before("execution(* com.inkubator.*.service.impl.*.*(..))")
+    public void logBeforeService(JoinPoint joinPoint) {
+//        Advised advised = (Advised) joinPoint.getThis();
+//        Class<?> cls = advised.getTargetSource().getTargetClass();
         enterDate = new Date();
-        LOGGER.info(new SimpleDateFormat("dd-MM-yyy hh:mm:ss.SSS").format(enterDate));
-        LOGGER.info(" ---------- Service Executed  ----------");
-        LOGGER.info("BEFORE Methode - Class Name :" + joinPoint.getTarget().getClass().getName());
-        LOGGER.info("BEFORE Methode - Method Name :" + joinPoint.getSignature().getName() + "()");
-        LOGGER.info(" ---------- Service Executed ----------");
+        LOGGER.warn(new SimpleDateFormat("dd-MM-yyy hh:mm:ss.SSS").format(enterDate));
+        LOGGER.warn(" ---------- Service Executed  ----------");
+        LOGGER.warn("BEFORE Methode - Class Name :" + joinPoint.getTarget().getClass().getName());
+        LOGGER.warn("BEFORE Methode - Method Name :" + joinPoint.getSignature().getName() + "()");
+        LOGGER.warn(" ---------- Service Executed ----------");
     }
 
     @Before("execution(* com.inkubator.*.dao.impl.*.*(..))")
-    public void logBeforeDao(JoinPoint joinPoint, Object bean, String userName) {
-        LOGGER.info(" ---------- DAO Executed  ----------");
-        LOGGER.info("BEFORE Methode - Class Name :" + joinPoint.getTarget().getClass().getName());
-        LOGGER.info("BEFORE Methode - Method Name :" + joinPoint.getSignature().getName() + "()");
-        LOGGER.info(" ---------- DAO Executed ----------");
+    public void logBeforeDao(JoinPoint joinPoint) {
+        LOGGER.warn(" ---------- DAO Executed  ----------");
+        LOGGER.warn("BEFORE Methode - Class Name :" + joinPoint.getTarget().getClass().getName());
+        LOGGER.warn("BEFORE Methode - Method Name :" + joinPoint.getSignature().getName() + "()");
+        LOGGER.warn(" ---------- DAO Executed ----------");
     }
 
     @AfterReturning(pointcut = "execution(* com.inkubator.*.dao.impl.*.*(..))",
             returning = "result")
-    public void logAfterReturnDao(JoinPoint joinPoint, Object bean, String userName) {
-        LOGGER.info(" ---------- DAO Executed ----------");
-        LOGGER.info("AFTER Methode - Class Name :" + joinPoint.getTarget().getClass().getName());
-        LOGGER.info("AFTER Methode - Method Name :" + joinPoint.getSignature().getName() + "()");
-        LOGGER.info(" ---------- DAO Executed  ----------");
+    public void logAfterReturnDao(JoinPoint joinPoint, Object result) {
+        LOGGER.warn(" ---------- DAO Executed ----------");
+        LOGGER.warn("AFTER Methode - Class Name :" + joinPoint.getTarget().getClass().getName());
+        LOGGER.warn("AFTER Methode - Method Name :" + joinPoint.getSignature().getName() + "()");
+        LOGGER.warn(" ---------- DAO Executed  ----------");
     }
 
     @AfterReturning(pointcut = "execution(* com.inkubator.*.service.impl.*.*(..))",
             returning = "result")
-    public void logAfterReturnService(JoinPoint joinPoint, Object bean, String userName) {
+    public void logAfterReturnService(JoinPoint joinPoint, Object result) {
 
-        LOGGER.info(" ---------- Service Executed  ----------");
-        LOGGER.info("AFTER Methode - Class Name :" + joinPoint.getTarget().getClass().getName());
-        LOGGER.info("AFTER Methode - Method Name :" + joinPoint.getSignature().getName() + "()");
-        LOGGER.info(" ---------- Service Executed  ----------");
+        LOGGER.warn(" ---------- Service Executed  ----------");
+        LOGGER.warn("AFTER Methode - Class Name :" + joinPoint.getTarget().getClass().getName());
+        LOGGER.warn("AFTER Methode - Method Name :" + joinPoint.getSignature().getName() + "()");
+        LOGGER.warn(" ---------- Service Executed  ----------");
         escapeDate = new Date();
-        LOGGER.info(new SimpleDateFormat("dd-MM-yyy hh:mm:ss.SSS").format(escapeDate));
+        LOGGER.warn(new SimpleDateFormat("dd-MM-yyy hh:mm:ss.SSS").format(escapeDate));
         String start = new SimpleDateFormat("ss.SSS").format(enterDate);
         String end = new SimpleDateFormat("ss.SSS").format(escapeDate);
         Double star1 = Double.parseDouble(start);
         Double end1 = Double.parseDouble(end);
-        LOGGER.info("Total time :" + (end1 - star1) + " s");
+        LOGGER.warn("Total time :" + (end1 - star1) + " s");
 
     }
 
+ 
+    
 }
