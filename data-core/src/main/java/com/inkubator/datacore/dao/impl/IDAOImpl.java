@@ -498,7 +498,6 @@ public abstract class IDAOImpl<T> implements Serializable {
     }
     
     public Long getTotalByNameAndNotId(String name, Long id) {
-        System.out.println(" hahah");
         Criteria criteria = getCurrentSession().createCriteria(getEntityClass());
         criteria.add(Restrictions.eq("name", name));
         criteria.add(Restrictions.ne("id", id));
